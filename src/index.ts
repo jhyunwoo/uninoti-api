@@ -3,7 +3,7 @@ import admissionChecker from "./admission-checker";
 import { csrf } from "hono/csrf";
 import { cors } from "hono/cors";
 
-const sites = ["https://unoti.moveto.kr"];
+const sites = ["https://uninoti.moveto.kr"];
 
 const app = new Hono();
 
