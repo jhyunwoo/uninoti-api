@@ -28,7 +28,6 @@ app.get("/snu-jigyun-1st", async (c) => {
   const state = await admissionChecker(url, ["2025", "일반전형", "합격자"]);
 
   return c.json({
-    title: "서울대학교 학생부종합전형 지역균형전형 1단계 발표",
     state: state,
   });
 });
@@ -44,7 +43,6 @@ app.get("/yonsei-international-1st", async (c) => {
   );
 
   return c.json({
-    title: "연세대학교 학생부종합전형 국제형 1단계 발표",
     state: state,
   });
 });
