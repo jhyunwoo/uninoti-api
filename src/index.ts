@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import admissionChecker from "./admission-checker";
 import { csrf } from "hono/csrf";
 import { cors } from "hono/cors";
+import countInText from "./count-in-text";
 
 const sites = ["https://uninoti.moveto.kr", "http://localhost:3000"];
 
@@ -71,6 +72,26 @@ app.get("/yonsei-final", async (c) => {
 
   return c.json({
     state: state,
+  });
+});
+
+app.get("/korea-gaejuck-final", async (c) => {
+  const url = "https://oku.korea.ac.kr/oku/index.do";
+  const response = await fetch(url, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+      "Content-Type": "text/html",
+    },
+  });
+
+  const buffer = await response.arrayBuffer(); // 응답 데이터를 바이너리 형태로 가져오기
+
+  const decoder = new TextDecoder("utf-8");
+  const html = decoder.decode(buffer);
+
+  return c.json({
+    state: countInText(html, "계열적합전형") > 9,
   });
 });
 
