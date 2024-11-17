@@ -6,6 +6,10 @@ routes = [
     { pattern = "api.uninoti.moveto.kr", custom_domain = true }
 ]
 
+# wrangler.toml (wrangler v3.79.0^)
+[observability.logs]
+enabled = true
+
 # compatibility_flags = [ "nodejs_compat" ]
 
 # [vars]
