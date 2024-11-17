@@ -32,6 +32,18 @@ app.get("/snu-jigyun-1st", async (c) => {
   });
 });
 
+app.get("/snu-final", async (c) => {
+  const url = "https://admission.snu.ac.kr/undergraduate/notice";
+
+  const state = await admissionChecker(url, [
+    "2025학년도 대학 수시모집 합격자 발표",
+  ]);
+
+  return c.json({
+    state: state,
+  });
+});
+
 app.get("/yonsei-international-1st", async (c) => {
   const url =
     "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
@@ -39,6 +51,21 @@ app.get("/yonsei-international-1st", async (c) => {
   const state = await admissionChecker(
     url,
     ["2025학년도", "수시모집", "국제형", "1단계"],
+    "euc-kr",
+  );
+
+  return c.json({
+    state: state,
+  });
+});
+
+app.get("/yonsei-final", async (c) => {
+  const url =
+    "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
+
+  const state = await admissionChecker(
+    url,
+    ["2025학년도", "수시모집", "최종", "합격자"],
     "euc-kr",
   );
 
