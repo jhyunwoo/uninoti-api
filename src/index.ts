@@ -60,6 +60,21 @@ app.get("/yonsei-international-1st", async (c) => {
   });
 });
 
+app.get("/yonsei-talent-international-final", async (c) => {
+  const url =
+    "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
+
+  const state = await admissionChecker(
+    url,
+    ["2025학년도", "수시모집", "특기자", "국제인재", "최종"],
+    "euc-kr",
+  );
+
+  return c.json({
+    state: state,
+  });
+});
+
 app.get("/yonsei-final", async (c) => {
   const url =
     "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
