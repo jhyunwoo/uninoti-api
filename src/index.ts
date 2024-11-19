@@ -45,18 +45,9 @@ app.get("/snu-final", async (c) => {
   });
 });
 
-app.get("/yonsei-international-1st", async (c) => {
-  const url =
-    "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
-
-  const state = await admissionChecker(
-    url,
-    ["2025학년도", "수시모집", "국제형", "1단계"],
-    "euc-kr",
-  );
-
+app.get("/yonsei-international-1st", (c) => {
   return c.json({
-    state: state,
+    state: true,
   });
 });
 
@@ -107,6 +98,15 @@ app.get("/korea-gaejuck-final", async (c) => {
 
   return c.json({
     state: countInText(html, "계열적합전형") > 9,
+  });
+});
+
+app.get("/cau-tamgu-1st", async (c) => {
+  const url =
+    "http://admission.cau.ac.kr/submenu.do?menuurl=n5%2fP1yX8Zyh%2fvtvla1KeyA%3d%3d&";
+  const state = await admissionChecker(url, ["25학년도", "탐구형", "합격자"]);
+  return c.json({
+    state: state,
   });
 });
 
