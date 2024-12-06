@@ -83,21 +83,9 @@ app.get("/yonsei-final", async (c) => {
 
 app.get("/korea-gaejuck-final", async (c) => {
   const url = "https://oku.korea.ac.kr/oku/index.do";
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-      "Content-Type": "text/html",
-    },
-  });
-
-  const buffer = await response.arrayBuffer(); // 응답 데이터를 바이너리 형태로 가져오기
-
-  const decoder = new TextDecoder("utf-8");
-  const html = decoder.decode(buffer);
 
   return c.json({
-    state: countInText(html, "계열적합전형") > 9,
+    state: (await countInText(url, "계열적합전형")) > 9,
   });
 });
 
@@ -107,6 +95,22 @@ app.get("/cau-tamgu-1st", async (c) => {
   const state = await admissionChecker(url, ["25학년도", "탐구형", "합격자"]);
   return c.json({
     state: state,
+  });
+});
+
+app.get("/sogang-final", async (c) => {
+  const url = "https://admission.sogang.ac.kr/enter/html/counsel/notice.asp";
+
+  return c.json({
+    state: (await countInText(url, "합격자")) > 1,
+  });
+});
+
+app.get("/hanyang-final", async (c) => {
+  const url = "https://go.hanyang.ac.kr/web/notice/notice_list.do?m_type=SUSI";
+
+  return c.json({
+    state: (await countInText(url, "합격자")) > 4,
   });
 });
 

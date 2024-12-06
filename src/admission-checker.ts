@@ -20,7 +20,6 @@ export default async function admissionChecker(
   // TextDecoder로 특정 인코딩 처리
   const decoder = new TextDecoder(encoding);
   const html = decoder.decode(buffer);
-
   let state = false;
 
   if (containsAllKeywords(html, keywords)) {
