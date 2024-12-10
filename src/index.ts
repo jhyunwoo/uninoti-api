@@ -36,12 +36,8 @@ app.get("/snu-jigyun-1st", async (c) => {
 app.get("/snu-final", async (c) => {
   const url = "https://admission.snu.ac.kr/undergraduate/notice";
 
-  const state = await admissionChecker(url, [
-    "2025학년도 대학 수시모집 합격자 발표",
-  ]);
-
   return c.json({
-    state: state,
+    state: (await countInText(url, "합격자")) > 2,
   });
 });
 
@@ -70,14 +66,8 @@ app.get("/yonsei-final", async (c) => {
   const url =
     "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
 
-  const state = await admissionChecker(
-    url,
-    ["2025학년도", "수시모집", "최종", "합격자"],
-    "euc-kr",
-  );
-
   return c.json({
-    state: state,
+    state: (await countInText(url, "합격자", "euc-kr")) > 15,
   });
 });
 
@@ -111,6 +101,14 @@ app.get("/hanyang-final", async (c) => {
 
   return c.json({
     state: (await countInText(url, "합격자")) > 4,
+  });
+});
+
+app.get("/korea-final", async (c) => {
+  const url = "https://oku.korea.ac.kr/oku/index.do";
+
+  return c.json({
+    state: (await countInText(url, "합격자")) > 37,
   });
 });
 

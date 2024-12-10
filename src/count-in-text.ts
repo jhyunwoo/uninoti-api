@@ -1,4 +1,8 @@
-export default async function countInText(url: string, word: string) {
+export default async function countInText(
+  url: string,
+  word: string,
+  encoding = "utf-8",
+) {
   const response = await fetch(url, {
     headers: {
       "User-Agent":
@@ -9,7 +13,7 @@ export default async function countInText(url: string, word: string) {
 
   const buffer = await response.arrayBuffer(); // 응답 데이터를 바이너리 형태로 가져오기
 
-  const decoder = new TextDecoder("utf-8");
+  const decoder = new TextDecoder(encoding);
   const html = decoder.decode(buffer);
   let count = 0;
   let index = 0;
