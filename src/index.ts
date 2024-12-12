@@ -49,7 +49,7 @@ app.get("/yonsei-final", async (c) => {
     "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
 
   return c.json({
-    state: (await countInText(url, "합격자", "euc-kr")) > 15,
+    state: (await countInText(url, "합격자", "euc-kr")) > 16,
   });
   // return c.json({
   //   state: true,
