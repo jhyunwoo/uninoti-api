@@ -27,15 +27,6 @@ app.get("/", (c) => {
  * 서울대 수시 최종 합격자 발표
  */
 app.get("/snu-final", async (c) => {
-  const url = "https://admission.snu.ac.kr/undergraduate/notice";
-
-  const state = await admissionChecker(url, [
-    "2025학년도 대학 수시모집 합격자 발표",
-  ]);
-
-  // return c.json({
-  //   state: state,
-  // });
   return c.json({
     state: true,
   });
@@ -74,11 +65,6 @@ app.get("/korea-final", async (c) => {
  * 서강대 수시 최종 합격자 발표
  */
 app.get("/sogang-final", async (c) => {
-  const url = "https://admission.sogang.ac.kr/enter/html/rolling/notice.asp";
-
-  // return c.json({
-  //   state: (await countInText(url, "합격자")) > 1,
-  // });
   return c.json({
     state: true,
   });
@@ -88,13 +74,6 @@ app.get("/sogang-final", async (c) => {
  * 한양대 수시 최종 합격자 발표
  */
 app.get("/hanyang-final", async (c) => {
-  const url = "https://go.hanyang.ac.kr/web/notice/notice_list.do?m_type=SUSI";
-
-  // return c.json({
-  //   state:
-  //     (await countInText(url, "최종합격자")) > 1 ||
-  //     (await countInText(url, "합격자")) > 4,
-  // });
   return c.json({
     state: true,
   });
