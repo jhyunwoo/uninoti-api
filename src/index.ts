@@ -23,22 +23,87 @@ app.get("/", (c) => {
   return c.json({ state: "Healthy" });
 });
 
-app.get("/snu-jigyun-1st", async (c) => {
-  const url = "https://admission.snu.ac.kr/undergraduate/notice";
-
-  const state = await admissionChecker(url, ["2025", "지역균형전형", "합격자"]);
-
-  return c.json({
-    state: state,
-  });
-});
-
+/**
+ * 서울대 수시 최종 합격자 발표
+ */
 app.get("/snu-final", async (c) => {
   const url = "https://admission.snu.ac.kr/undergraduate/notice";
 
   const state = await admissionChecker(url, [
     "2025학년도 대학 수시모집 합격자 발표",
   ]);
+
+  return c.json({
+    state: state,
+  });
+  // return c.json({
+  //   state: true,
+  // });
+});
+
+/**
+ * 연세대 수시 최종 합격자 발표
+ */
+app.get("/yonsei-final", async (c) => {
+  const url =
+    "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
+
+  return c.json({
+    state: (await countInText(url, "합격자", "euc-kr")) > 15,
+  });
+  // return c.json({
+  //   state: true,
+  // });
+});
+
+/**
+ * 고려대 수시 최종 합격자 발표
+ */
+app.get("/korea-final", async (c) => {
+  const url = "https://oku.korea.ac.kr/oku/index.do";
+
+  return c.json({
+    state: (await countInText(url, "최종합격자")) > 17,
+  });
+  // return c.json({
+  //   state: true,
+  // });
+});
+
+/**
+ * 서강대 수시 최종 합격자 발표
+ */
+app.get("/sogang-final", async (c) => {
+  const url = "https://admission.sogang.ac.kr/enter/html/rolling/notice.asp";
+
+  return c.json({
+    state: (await countInText(url, "합격자")) > 1,
+  });
+  // return c.json({
+  //   state: true,
+  // });
+});
+
+/**
+ * 한양대 수시 최종 합격자 발표
+ */
+app.get("/hanyang-final", async (c) => {
+  const url = "https://go.hanyang.ac.kr/web/notice/notice_list.do?m_type=SUSI";
+
+  return c.json({
+    state:
+      (await countInText(url, "최종합격자")) > 1 ||
+      (await countInText(url, "합격자")) > 4,
+  });
+  // return c.json({
+  //   state: true,
+  // });
+});
+
+app.get("/snu-jigyun-1st", async (c) => {
+  const url = "https://admission.snu.ac.kr/undergraduate/notice";
+
+  const state = await admissionChecker(url, ["2025", "지역균형전형", "합격자"]);
 
   return c.json({
     state: state,
@@ -66,15 +131,6 @@ app.get("/yonsei-talent-international-final", async (c) => {
   });
 });
 
-app.get("/yonsei-final", async (c) => {
-  const url =
-    "https://admission.yonsei.ac.kr/seoul/admission/html/rolling/notice.asp";
-
-  return c.json({
-    state: (await countInText(url, "합격자", "euc-kr")) > 15,
-  });
-});
-
 app.get("/korea-gaejuck-final", async (c) => {
   const url = "https://oku.korea.ac.kr/oku/index.do";
 
@@ -89,32 +145,6 @@ app.get("/cau-tamgu-1st", async (c) => {
   const state = await admissionChecker(url, ["25학년도", "탐구형", "합격자"]);
   return c.json({
     state: state,
-  });
-});
-
-app.get("/sogang-final", async (c) => {
-  const url = "https://admission.sogang.ac.kr/enter/html/rolling/notice.asp";
-
-  return c.json({
-    state: (await countInText(url, "합격자")) > 1,
-  });
-});
-
-app.get("/hanyang-final", async (c) => {
-  const url = "https://go.hanyang.ac.kr/web/notice/notice_list.do?m_type=SUSI";
-
-  return c.json({
-    state:
-      (await countInText(url, "최종합격자")) > 1 ||
-      (await countInText(url, "합격자")) > 4,
-  });
-});
-
-app.get("/korea-final", async (c) => {
-  const url = "https://oku.korea.ac.kr/oku/index.do";
-
-  return c.json({
-    state: (await countInText(url, "최종합격자")) > 17,
   });
 });
 
