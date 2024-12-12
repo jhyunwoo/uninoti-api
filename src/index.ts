@@ -93,7 +93,7 @@ app.get("/cau-tamgu-1st", async (c) => {
 });
 
 app.get("/sogang-final", async (c) => {
-  const url = "https://admission.sogang.ac.kr/enter/html/counsel/notice.asp";
+  const url = "https://admission.sogang.ac.kr/enter/html/rolling/notice.asp";
 
   return c.json({
     state: (await countInText(url, "합격자")) > 1,
@@ -104,7 +104,9 @@ app.get("/hanyang-final", async (c) => {
   const url = "https://go.hanyang.ac.kr/web/notice/notice_list.do?m_type=SUSI";
 
   return c.json({
-    state: (await countInText(url, "합격자")) > 4,
+    state:
+      (await countInText(url, "최종합격자")) > 1 ||
+      (await countInText(url, "합격자")) > 4,
   });
 });
 
