@@ -51,14 +51,14 @@ app.get("/yonsei-final", async (c) => {
  * 고려대 수시 최종 합격자 발표
  */
 app.get("/korea-final", async (c) => {
-  const url = "https://oku.korea.ac.kr/oku/index.do";
-
-  return c.json({
-    state: (await countInText(url, "최종합격자")) > 17,
-  });
+  // const url = "https://oku.korea.ac.kr/oku/index.do";
+  //
   // return c.json({
-  //   state: true,
+  //   state: (await countInText(url, "최종합격자")) > 17,
   // });
+  return c.json({
+    state: true,
+  });
 });
 
 /**
